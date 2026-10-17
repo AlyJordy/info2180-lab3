@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   squares.forEach(function (square, index) {
     square.addEventListener("click", function () {
-        if (gameOver) return; // Prevent further moves if the game is over
+        if (gameOver || gameState[index] !== null) return; // Prevent further moves if the game is over or square is already taken
         gameState[index] = currentPlayer;
         square.textContent = currentPlayer;
         square.classList.add(currentPlayer);
