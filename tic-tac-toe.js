@@ -1,6 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
   const board = document.getElementById("board");
   const squares = board.querySelectorAll("div");
+  const status = document.getElementById("status");
+  const newGameBtn = document.querySelector(".btn");
+  const defaultMessage = status.textContent;
+
 
   squares.forEach(function (square) {
     square.classList.add("square");
@@ -12,10 +16,9 @@ document.addEventListener("DOMContentLoaded", function () {
     square.classList.remove("hover");
     });
   });
-
+ 
   let gameState = Array(9).fill(null); // Initialize the game state with null values
   let currentPlayer = "X"; 
-  const status = document.getElementById("status");
   let gameOver = false;
   const winningCombos = [
     [0, 1, 2],
@@ -46,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
         square.classList.add(currentPlayer);
         const winner = checkWinner();
         if (winner) {
-            status.textContent = `Player ${winner} wins!`;
+        status.textContent = "Congratulations! " + winner + " is the Winner!";
             status.classList.add("you-won");
             gameOver = true; // Set gameOver to true when a player wins
         }
@@ -60,4 +63,15 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
     });
-})
+    newGameBtn.addEventListener("click", function () {
+        gameState = Array(9).fill(null);
+        currentPlayer = "X";
+        gameOver = false;
+        status.textContent = defaultMessage;
+        status.classList.remove("you-won", "draw");
+        squares.forEach(function (square) {
+            square.textContent = "";
+            square.classList.remove("X", "O");
+        });
+    });
+});
